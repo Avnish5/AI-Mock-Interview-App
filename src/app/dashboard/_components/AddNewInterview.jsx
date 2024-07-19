@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { chatSession } from '../../../../utils/geminiAiModel';
   
 
 function AddNewInterview() {
@@ -20,9 +21,11 @@ function AddNewInterview() {
     const[jobDesc,setJobDesc]=useState();
     const[jobExp,setJobExp]=useState();
 
-    const onSubmit=(e)=>{
-        e.preventDefault()
-        console.log(jobDesc,jobExp,jobPosition);
+    const onSubmit=async (e)=>{
+        const inputPrompt=`job Position: ${jobPosition}, Job description: ${jobDesc}, Years of experience:${jobExp}. depends upon this info give me 5 questions and answrs.give me question and answer in json format`
+        const result=await chatSession.sendMessage(inputPrompt);
+        const mockJsonResponse=result.response.text().replace('```json','').replace('```','')
+        console.log(result.response.text())
     }
 
   return (
