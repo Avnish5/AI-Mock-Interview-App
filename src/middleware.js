@@ -3,6 +3,7 @@ import {
     createRouteMatcher
   } from '@clerk/nextjs/server';
   
+  console.log("ddd")
   const isProtectedRoute = createRouteMatcher([
     '/dashboard(.*)',
     '/forum(.*)',
