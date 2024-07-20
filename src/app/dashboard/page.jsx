@@ -1,5 +1,5 @@
-import React from 'react'
-import AddNewInterview from './_components/AddNewInterview'
+import React from "react";
+import AddNewInterview from "./_components/AddNewInterview";
 
 function DashBoard() {
   return (
@@ -8,10 +8,10 @@ function DashBoard() {
       <h2 className="text-gray-500">Create and start your mock interview</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 my-5">
-        <AddNewInterview/>
+        <AddNewInterview />
       </div>
     </div>
-  )
+  );
 }
 
-export default DashBoard
+export default DashBoard;

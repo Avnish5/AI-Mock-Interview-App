@@ -20,6 +20,7 @@ import { db, submitDataToDatabase } from "../../../../utils/db";
 import { MockInterview } from "../../../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import Error from "next/error";
+import { useRouter } from "next/navigation";
 
 function AddNewInterview() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -30,6 +31,7 @@ function AddNewInterview() {
   const [jsonResponse, setJsonResponse] = useState();
   const user = useUser();
   const email = user?.user?.primaryEmailAddress?.emailAddress;
+  const router = useRouter();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -41,17 +43,16 @@ function AddNewInterview() {
       console.log(result);
       setJsonResponse(result);
 
-      if (result) {
-        const res = await submitDataToDatabase(
-          email,
-          result,
-          jobPosition,
-          jobDesc,
-          jobExp
-        );
-        console.log("id= ", res);
-      }
+      const res = await submitDataToDatabase(
+        email,
+        result,
+        jobPosition,
+        jobDesc,
+        jobExp
+      );
+      console.log("id= ", res);
 
+      router.push(`/dashboard/interview/${res[0]?.mockId}`);
       setLoading(false);
     } catch (error) {
       setLoading(false);
