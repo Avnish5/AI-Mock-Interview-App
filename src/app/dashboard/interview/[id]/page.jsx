@@ -15,6 +15,7 @@ import { db } from "../../../../../utils/db";
 import { eq } from "drizzle-orm";
 import { MockInterview } from "../../../../../utils/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 function Interview({ params }) {
   const [interViewDetails, setInterViewDetails] = useState(null);
@@ -97,9 +98,11 @@ function Interview({ params }) {
         </div>
       </div>
       <div className="flex justify-end items-end">
-        <Button className="bg-purple-800 hover:bg-purple-800">
-          Start Interview
-        </Button>
+        <Link href={`/dashboard/interview/${params.id}/start`}>
+          <Button className="bg-purple-800 hover:bg-purple-800">
+            Start Interview
+          </Button>
+        </Link>
       </div>
     </div>
   );
