@@ -2,6 +2,7 @@ import { Lightbulb, Volume2 } from "lucide-react";
 import React from "react";
 
 function QuetionSection({ mockInterviewQuestion, activeQuestion }) {
+   
   const textToSpeech = (text) => {
     if ("speechSynthesis" in window) {
       const speech = new SpeechSynthesisUtterance(text);
@@ -29,7 +30,7 @@ function QuetionSection({ mockInterviewQuestion, activeQuestion }) {
           {mockInterviewQuestion[activeQuestion]?.question}
         </h2>
 
-        <Volume2 className="cursor-pointer"
+        <Volume2 className="cursor-pointer "
           onClick={() =>
             textToSpeech(mockInterviewQuestion[activeQuestion]?.question)
           }

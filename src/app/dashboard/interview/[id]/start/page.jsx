@@ -20,9 +20,11 @@ function StartInterview({ params }) {
       .select()
       .from(MockInterview)
       .where(eq(MockInterview.mockId, params.id));
-    console.log(result[0]);
+
+    const temp = JSON.parse(result[0].jsonMockResp);
     setInterViewDetails(result[0]);
-    setMockInterviewQuestion(JSON.parse(result[0].jsonMockResp));
+    setMockInterviewQuestion(temp);
+    //   setMockInterviewQuestion(result[0].map(jsonString => JSON.parse(jsonString)))
   };
 
   return (
@@ -32,7 +34,11 @@ function StartInterview({ params }) {
           activeQuestion={activeQuestion}
           mockInterviewQuestion={mockInterviewQuestion}
         />
-        <RecordAnswerSection />
+        <RecordAnswerSection
+          activeQuestion={activeQuestion}
+          mockInterviewQuestion={mockInterviewQuestion}
+          interViewDetails={interViewDetails}
+        />
       </div>
     </div>
   );

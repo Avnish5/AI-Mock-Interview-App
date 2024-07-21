@@ -40,7 +40,7 @@ function AddNewInterview() {
       setLoading(true);
       const inputPrompt = `job Position: ${jobPosition}, Job description: ${jobDesc}, Years of experience:${jobExp}. depends upon this info give me 5 questions and answrs.give me question and answer in json format`;
       const result = await generateResponse(inputPrompt);
-      console.log(result);
+     
       setJsonResponse(result);
 
       const res = await submitDataToDatabase(

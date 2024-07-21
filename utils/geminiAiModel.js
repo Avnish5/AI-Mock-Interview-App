@@ -26,7 +26,6 @@ const chatSession = model.startChat({
 export async function generateResponse(inputPrompt) {
   try {
     const result = await chatSession.sendMessage(inputPrompt);
-    console.log(result);
     return generateJsonResponse(result); // Return the result of sendMessage
   } catch (error) {
     throw new Error(`Error in generateResponse: ${error.message}`);
@@ -34,5 +33,9 @@ export async function generateResponse(inputPrompt) {
 }
 
 function generateJsonResponse(result) {
-  return result.response.text().replace("```json", "").replace("```", "");
+   return result.response.text().replace("```json", "").replace("```", "");
+   
 }
+
+
+
