@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { MockInterview } from "./schema";
 import * as schema from "./schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 const sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL);
 export const db = drizzle(sql, { schema });
 
@@ -39,4 +39,15 @@ export async function getInterviewDetails(id) {
 
     console.log(result[0])
   return result[0];
+}
+
+export async function getInterviewList(email)
+{
+  const result = await db
+  .select()
+  .from(MockInterview)
+  .where(eq(MockInterview.createdBy,email))
+  .orderBy(desc(MockInterview.id))
+
+  return result;
 }

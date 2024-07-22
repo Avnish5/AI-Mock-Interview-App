@@ -20,6 +20,7 @@ function RecordAnswerSection({
 }) {
   const [userAnswer, setUserAnswer] = useState("");
 
+  const [loading,setLoading]=useState(false);
   const user = useUser();
   const email = user?.user?.primaryEmailAddress?.emailAddress;
   const {
@@ -27,6 +28,7 @@ function RecordAnswerSection({
     interimResult,
     isRecording,
     results,
+    setResults,
     startSpeechToText,
     stopSpeechToText,
   } = useSpeechToText({
@@ -40,8 +42,16 @@ function RecordAnswerSection({
     );
   }, [results]);
 
-  const saveUserAnswer = async () => {
+  useEffect(()=>{
+    if(!isRecording&&userAnswer.length>10)
+    {
+      updateUserAnserIndb();
+    }
+  },[userAnswer])
+
+  const startStopRecording = async () => {
     if (isRecording) {
+     
       stopSpeechToText();
       //   if (userAnswer?.length < 10) {
       //     toast("There is an error while saving your answer.Please try again");
@@ -49,6 +59,38 @@ function RecordAnswerSection({
       //   }
 
       const feedbackPrompt =
+        "Question: " +
+        mockInterviewQuestion[activeQuestion]?.question +
+        ", User Answer:" +
+        userAnswer +
+        ",Depends on question and user answer for the given interview question.Please give us rating for answer and feedback as area of improvment if any.In just 3-5 lines to improve it in JSON fromat with rating filed and feedback field";
+
+      const result = await generateResponse(feedbackPrompt);
+      const jsonResult=JSON.parse(result);
+      console.log(jsonResult)
+      const resp = await db.insert(UserAnswer).values({
+        mockIdRef: interViewDetails?.mockId,
+        question: mockInterviewQuestion[activeQuestion]?.question,
+        correctAns: mockInterviewQuestion[activeQuestion]?.answer,
+        userAns: userAnswer,
+        feedback: jsonResult?.feedback,
+        rating: jsonResult?.rating,
+        userEmail: email,
+        createdAt: moment().format("DD-MM-YYYY"),
+      });
+
+      if (resp) {
+        toast("User answer recorded successfully");
+      }
+  
+    } else {
+      startSpeechToText();
+    }
+  };
+
+  const updateUserAnserIndb=async()=>{
+    setLoading(true)
+    const feedbackPrompt =
         "Question: " +
         mockInterviewQuestion[activeQuestion]?.question +
         ", User Answer:" +
@@ -70,11 +112,14 @@ function RecordAnswerSection({
 
       if (resp) {
         toast("User answer recorded successfully");
+        setUserAnswer('')
+        setResults([])
       }
-    } else {
-      startSpeechToText();
-    }
-  };
+      setResults([])
+
+      setLoading(false)
+
+  }
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -94,7 +139,7 @@ function RecordAnswerSection({
           }}
         />
       </div>
-      <Button onClick={saveUserAnswer} variant="outline" className="my-10">
+      <Button disabled={loading} onClick={startStopRecording} variant="outline" className="my-10">
         {isRecording ? (
           <h2 className="text-red-600 flex gap-2 animate-pulse ">
             <StopCircle /> Stop Recording
