@@ -1,39 +1,57 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getInterviewDetails } from "../../../../utils/db";
+import { getInterviewList} from "../../../../utils/db";
 import { useUser } from "@clerk/nextjs";
 import InterviewItemCard from "./InterviewItemCard";
 import { db } from "../../../../utils/db";
 import { eq, desc } from "drizzle-orm";
 import { MockInterview } from "../../../../utils/schema";
+import { toast } from "sonner";
+import { Loader2Icon, LoaderCircle, LoaderIcon } from "lucide-react";
+import Loadable from "next/dist/shared/lib/loadable.shared-runtime";
 function InterviewList() {
   const user = useUser();
   const userEmail = user?.user?.primaryEmailAddress?.emailAddress;
   const [interviewList, setInterviewList] = useState();
-  console.log(userEmail);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    user && getInterviewList();
+    if (userEmail) {
+      fetchInterviewList();
+    }
   }, [userEmail]);
 
-  const getInterviewList = async () => {
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .where(eq(MockInterview.createdBy, userEmail))
-      .orderBy(desc(MockInterview.id));
-
-    setInterviewList(result);
-
-    console.log(result);
+  const fetchInterviewList = async () => {
+    try {
+      setIsLoading(true);
+      const list = await getInterviewList(userEmail);
+      setInterviewList(list);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching interview list:", error);
+      toast.error("There is some error.Please try again")
+      setIsLoading(false);
+    }
   };
+  
   return (
     <div>
-      <h2 className="font-bold text-lg">Previous Mock Interview</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
-      {interviewList &&
-        interviewList.map((interview, index) => <InterviewItemCard interview={interview} key={index}/>)}
-      </div>
+      {isLoading ? (
+        <h2 className="font-bold text-lg"><LoaderCircle className="animate-spin"/> Loading </h2>
+      ) : interviewList&&interviewList.length === 0 ? (
+        <h2 className="font-bold text-lg">Create your first Mock Interview</h2>
+      ) : (
+        <h2 className="font-bold text-lg">Previous Mock Interviews</h2>
+      )}
+      {interviewList && interviewList.length > 0 && (
+  interviewList.map((interview, index) => (
+    <InterviewItemCard interview={interview} key={index} />
+  ))
+)}
+
+
+
     </div>
   );
 }

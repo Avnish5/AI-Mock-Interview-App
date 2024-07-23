@@ -21,6 +21,7 @@ import { MockInterview } from "../../../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 function AddNewInterview() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -40,7 +41,7 @@ function AddNewInterview() {
       setLoading(true);
       const inputPrompt = `job Position: ${jobPosition}, Job description: ${jobDesc}, Years of experience:${jobExp}. depends upon this info give me 5 questions and answrs.give me question and answer in json format`;
       const result = await generateResponse(inputPrompt);
-     
+     console.log(typeof(result));
       setJsonResponse(result);
 
       const res = await submitDataToDatabase(
@@ -56,6 +57,8 @@ function AddNewInterview() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      toast.error("There is some errror while saving the data to database.Please try again")
+      console.log(error)
       throw new Error(error.message);
     }
   };
