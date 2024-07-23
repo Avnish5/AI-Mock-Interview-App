@@ -5,9 +5,9 @@ function AuthLayout({children}) {
     return (
       <div>
         
-        <Header/>
+        
         <div>{children}</div>
-<Footer/>
+
         
       </div>
     );

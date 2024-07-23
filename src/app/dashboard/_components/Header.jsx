@@ -34,7 +34,7 @@ function Header() {
         >
           Upgrade
         </li>
-        <Link href={'/howitworks'}>
+        <Link href={'/how-it-works'}>
         <li
           className={`hover:text-primary hover:text-purple-800 hover:font-bold transition-all cursor-pointer ${
             path == "/dashboard/how" && "text-purple-800 font-bold"
