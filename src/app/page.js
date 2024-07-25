@@ -1,7 +1,12 @@
+'use client'
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 export default function Home() {
+
+  const user = useUser();
+  console.log(user.isSignedIn);
   return (
   <div>
 
@@ -31,10 +36,10 @@ export default function Home() {
 
       <div className="mt-8 flex flex-wrap gap-4 text-center">
         <Link
-          href={'/sign-up'}
+          href={user.isSignedIn?'/dashboard':'/sign-up'}
           className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
         >
-          Get Started
+          {user.isSignedIn?"Go to dashboard":"Get Started"}
         </Link>
 
         <Link
