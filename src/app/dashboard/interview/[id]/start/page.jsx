@@ -8,6 +8,7 @@ import RecordAnswerSection from "./_components/RecordAnswerSection";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+
 function StartInterview({ params }) {
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState(null);
   const [interViewDetails, setInterViewDetails] = useState(null);
@@ -15,7 +16,7 @@ function StartInterview({ params }) {
   useEffect(() => {
     console.log(params.id);
     GetInterviewDetails();
-  }, []);
+  }, [params.id]);
 
   const GetInterviewDetails = async () => {
     const result = await db

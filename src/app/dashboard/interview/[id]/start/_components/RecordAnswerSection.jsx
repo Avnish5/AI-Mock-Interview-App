@@ -129,6 +129,7 @@ function RecordAnswerSection({
           width={200}
           height={200}
           className="absolute"
+          alt={"webcam"}
         />
         <Webcam
           mirrored={true}

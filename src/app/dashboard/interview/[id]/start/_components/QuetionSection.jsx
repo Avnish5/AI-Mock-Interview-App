@@ -18,6 +18,7 @@ function QuetionSection({ mockInterviewQuestion, activeQuestion }) {
           {mockInterviewQuestion &&
             mockInterviewQuestion.map((question, index) => (
               <h2
+              key={index}
                 className={`p-2 bg-secondary rounded-full cursor-pointer 
                 text-center text-xs md:text-sm
                 ${activeQuestion == index && ` bg-purple-800 text-white`}`}

@@ -135,7 +135,7 @@ function HowItWorks() {
             </svg>
 
             <h2 className="mt-4 text-xl font-bold text-white">
-              Privacy and Security{" "}
+              Privacy and Security
             </h2>
 
             <p className="mt-1 text-sm text-gray-300">

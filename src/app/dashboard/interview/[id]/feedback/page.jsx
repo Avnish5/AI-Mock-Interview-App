@@ -62,7 +62,7 @@ function Feedback({params}) {
        
       ) : (
         <div className="mt-7 text-center text-gray-500">
-          <p>Sorry, you haven't submitted any answers for this interview yet, so there is no feedback available.</p>
+          <p>Sorry, you have not submitted any answers for this interview yet, so there is no feedback available.</p>
         </div>
       )}
       <Link href={'/dashboard'}>
