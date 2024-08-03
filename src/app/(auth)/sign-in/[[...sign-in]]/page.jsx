@@ -5,14 +5,7 @@ export default function Page() {
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
-          <Image
-            alt="jhj"
-            src={"/auth"}
-            className="absolute inset-0 h-full w-full object-cover opacity-80"
-            width={880}
-            height={549}
-          
-          />
+         
 
           <div className="hidden lg:relative lg:block lg:p-12">
             <a className="block text-white" href="#">
@@ -63,12 +56,11 @@ export default function Page() {
               </a>
 
               <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                Welcome to Squid 🦑
+              Introducing AI-Driven Interviews
               </h1>
 
-              <p className="mt-4 leading-relaxed text-gray-500">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
+              <p className="mt-4 mb-4 leading-relaxed text-gray-500 ">
+              Explore the next generation of interview assessments with our AI-powered platform.
               </p>
             </div>
 
