@@ -3,7 +3,7 @@
 
 AI-Mock-Interview is an innovative platform built with Next.js that allows users to practice for job interviews with AI-generated mock interviews. Users can sign up or log in, create mock interviews tailored to their desired role, tech stack, and experience level, and receive AI-generated feedback and ratings on their responses.
 
-You can check out the website live here: [AI-Mock-Interview App](https://ai-mock-interview-lnreq56uq-avnish-kumars-projects-1ae1d03d.vercel.app/)
+You can check out the website live here: [AI-Mock-Interview App](https://ai-mock-interview-app-chi.vercel.app/)
 
 
 
