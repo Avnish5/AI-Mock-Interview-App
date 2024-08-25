@@ -32,6 +32,19 @@ export async function submitDataToDatabase(
   return resp;
 }
 
+export async function deleteInterview(id) {
+  try {
+    const result = await db
+                   .delete(MockInterview)
+                   .where(eq(MockInterview.id, id));
+  
+    console.log(result)
+    return result;
+  } catch (error) {
+    console.error('Error fetching interview details:', error);
+    throw new Error('Failed to fetch interview details');
+  }}
+
 export async function getInterviewDetails(id) {
   try {
     const result = await db

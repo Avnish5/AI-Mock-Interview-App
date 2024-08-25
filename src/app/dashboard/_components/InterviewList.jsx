@@ -9,6 +9,7 @@ import { MockInterview } from "../../../../utils/schema";
 import { toast } from "sonner";
 import { Loader2Icon, LoaderCircle, LoaderIcon } from "lucide-react";
 import Loadable from "next/dist/shared/lib/loadable.shared-runtime";
+import { deleteInterview } from "../../../../utils/db";
 function InterviewList() {
   const user = useUser();
   const userEmail = user?.user?.primaryEmailAddress?.emailAddress;
@@ -34,6 +35,17 @@ function InterviewList() {
       setIsLoading(false);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteInterview(id);
+      setInterviewList(prevList => prevList.filter(interview => interview.id !== id));
+      toast.success("Interview deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete interview:", error);
+      toast.error("Error while deleting the interview");
+    }
+  };
   
   return (
     <div >
@@ -47,7 +59,7 @@ function InterviewList() {
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
      {interviewList && interviewList.length > 0 && (
   interviewList.map((interview, index) => (
-    <InterviewItemCard interview={interview} key={index} />
+    <InterviewItemCard interview={interview} onDelete={handleDelete} key={index} />
   ))
 )}
      </div>

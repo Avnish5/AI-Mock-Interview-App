@@ -1,13 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { Delete, DeleteIcon, LucideDelete, RemoveFormatting, RemoveFormattingIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-function InterviewItemCard({ interview }) {
+import { toast } from "sonner";
+
+function InterviewItemCard({ interview,onDelete }) {
+  
   const router = useRouter();
 
   const onStart = () => {
     router.push("/dashboard/interview/" + interview?.mockId);
   };
+
+ 
 
   const onFeedback = () => {
     router.push("/dashboard/interview/" + interview?.mockId + "/feedback");
@@ -33,6 +39,12 @@ function InterviewItemCard({ interview }) {
         <Button onClick={onStart} size="sm" className="w-full">
           Start
         </Button>
+
+        <Button onClick={()=>onDelete(interview.id)} size="sm" className=" bg-red-500 hover:bg-red-600">
+          Remove
+        </Button>
+
+        
       </div>
     </div>
   );
